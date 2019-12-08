@@ -1,0 +1,451 @@
+
+<!doctype html>
+<html lang="en">
+
+ <head>
+  <meta charset="UTF-8" />
+  <title>Merry Christmas</title>
+  <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <style>
+      *{padding:0px;margin:0px;} /*这是为了消除默认dom元素的内外边距，使得我们写css的时候更精确*/
+        html{
+            margin: 0;
+            height: 100%;
+            }
+        body{
+            margin: 0;
+            /* height: 100%; */
+            /* background: radial-gradient( rgb(61, 108, 209), white); */
+            /* background: radial-gradient( rgb(0, 0, 0), rgb(97, 88, 88)); */
+            background: linear-gradient( rgb(23, 45, 78),  rgb(10, 10, 10));
+            }
+        .wrapper{
+            margin: 0;
+            /* height: 100%; */
+        }
+
+        .container{
+            width:165px;
+            height: 230px;
+            margin:0 auto;
+            perspective: 800px;
+        }
+        .logo{
+            width:30px;
+            height: 30px;
+            margin-left:25px;
+            margin-top:25px;
+            perspective: 800px;
+        }
+        audio{
+            margin-top:50px;
+            filter: sepia(20%) saturate(70%) grayscale(1) contrast(99%) invert(12%);
+        }
+        #photos{
+            position: relative;
+            width: 100%;
+            height: 100%;
+            -webkit-transform-style: preserve-3d;
+            -moz-transform-style: preserve-3d;
+            -ms-transform-style: preserve-3d;
+            transform-style: preserve-3d;
+            -webkit-animation:animate 12s linear infinite;
+            -o-animation:animate 12s linear infinite;
+            animation:animate 12s linear infinite;  
+            margin:120px auto;
+        }
+
+        #photos img{
+            width:100%;
+            height:100%;
+            position:absolute;
+            box-shadow:0 0 8px #eaeaea;
+            box-shadow: 1px -1px 6px #666;
+            border-radius:4px;
+            -webkit-box-reflect:below 3px -webkit-linear-gradient(top,rgba(0,0,0,0) 40%,rgba(0,0,0,0.5));
+            cursor:pointer;
+        }
+        #photos div{
+            width:200px;
+            height:200px;
+            border-radius:100%;
+            position:absolute;
+            top:325%;
+            left:350%;
+            margin-left:-600px;
+            margin-top:-600px;
+            transform:rotateX(90deg);
+            /* background:-webkit-radial-gradient(center center,600px 600px,rgba(158,158,222,0.5),rgba(0,0,0,0)); */
+            background-position: center;
+            /* background-image: url("./logo.jpg"); */
+            background-repeat: no-repeat
+        }
+
+        .footer {
+            position: fixed;
+            left: 0;
+            bottom: 10px;
+            width: 100%;
+            /* background-color: red; */
+            color: rgb(187, 197, 45);
+            text-align: center;
+        }
+
+        canvas{
+            /* margin: 0; */
+            /* height: 100%; */
+            position:absolute;top:0;left:0;
+            /* background: radial-gradient( rgb(61, 108, 209), white);  */
+        }
+    
+  </style>
+  <link rel="stylesheet" href="gallery.css">
+  <!-- <bgsound src="./back_music.mp3" loop="infinite"></bgsound> -->
+  <!-- <embed name="GoodEnough" src="back_music.mp3" loop="true" hidden="false" autostart="true"> -->
+ </head>
+
+<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha384-xBuQ/xzmlsLoJpyjoggmTEz8OWUFM0/RC5BsqQBDX2v5cMvDHcMakNTNrHIW2I5f" crossorigin="anonymous"></script>
+<script src="jquery.snow.js"></script>
+<canvas id="canvas"> </canvas>
+ <body>
+        <ul class="lightrope">
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+              </ul>
+
+    
+    <div class="wrapper" >
+        
+        <div align="right" id="player">
+            <audio controls class="control" >
+                <source src="back_music.mp3"  type="audio/mpeg">
+            </audio>
+        </div>
+        <div class="container">
+            <div id="photos">
+                <img src="1.gif"/>
+                <img src="2.gif"/>
+                <img src="3.gif"/>
+                <img src="4.gif"/>
+                <img src="5.gif"/>
+                <img src="6.gif"/>
+                <img src="7.gif"/>
+                <img src="8.gif"/>
+                <div></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <a href="https://github.com/stevenchen521/quant_ml" target="_blank">Source code</a>
+        <p>2019 Christmas Steven Made</p>
+        <p>All images copyright to their respective owner. The site is for fun and will be terminated in the early of Janurary, 2020</p>
+    </div>
+
+ </body>
+
+ <script>
+    var photosDom = document.getElementById('photos');
+    // get the images
+    var images = photosDom.getElementsByTagName('img'); 
+    //get the count of the images
+    var len = images.length;        
+    // 
+    var deg = Math.floor(360 / len);                    
+    for(var i = 0; i < len;i++){
+        images[i].style = 'transform : rotateY(' + deg * i + 'deg)'; //no space before deg 
+    }
+    for(var i = 0; i < len;i++){
+        images[i].style = 'transform : rotateY(' + deg * i + 'deg) translateZ(380px)'; //no space before deg 
+    }
+    var x = 0;
+    setInterval(function(){
+        photosDom.style.transform = "rotateX(-10deg) rotateY("+ (x++) * 0.3 +"deg)";
+    },30);
+
+
+
+    (function() {
+    var requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame ||
+    function(callback) {
+        window.setTimeout(callback, 1000 / 60);
+    };
+    window.requestAnimationFrame = requestAnimationFrame;
+    })();
+
+
+    var flakes = [],
+        canvas = document.getElementById("canvas"),
+        ctx = canvas.getContext("2d"),
+        flakeCount = 1000,
+        mX = -100,
+        mY = -100
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+    function snow() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        for (var i = 0; i < flakeCount; i++) {
+            var flake = flakes[i],
+                x = mX,
+                y = mY,
+                minDist = 150,
+                x2 = flake.x,
+                y2 = flake.y;
+
+            var dist = Math.sqrt((x2 - x) * (x2 - x) + (y2 - y) * (y2 - y)),
+                dx = x2 - x,
+                dy = y2 - y;
+
+            if (dist < minDist) {
+                var force = minDist / (dist * dist),
+                    xcomp = (x - x2) / dist,
+                    ycomp = (y - y2) / dist,
+                    deltaV = force / .02;
+
+                flake.velX -= deltaV * xcomp;
+                flake.velY -= deltaV * ycomp;
+
+            } else {
+                flake.velX *= .98;
+                if (flake.velY <= flake.speed) {
+                    flake.velY = flake.speed
+                }
+                flake.velX += Math.cos(flake.step += .05) * flake.stepSize;
+            }
+
+            ctx.fillStyle = "rgba(255,255,255," + flake.opacity + ")";
+            flake.y += flake.velY;
+            flake.x += flake.velX;
+                
+            if (flake.y >= canvas.height || flake.y <= 0) {
+                reset(flake);
+            }
+
+
+            if (flake.x >= canvas.width || flake.x <= 0) {
+                reset(flake);
+            }
+
+            ctx.beginPath();
+            ctx.arc(flake.x, flake.y, flake.size, 0, Math.PI * 2);
+            ctx.fill();
+        }
+        requestAnimationFrame(snow);
+    };
+
+    function reset(flake) {
+        flake.x = Math.floor(Math.random() * canvas.width);
+        flake.y = 0;
+        flake.size = (Math.random() * 3) + 2;
+        flake.speed = (Math.random() * 1) + 8.0;
+        flake.velY = flake.speed;
+        flake.velX = 0;
+        flake.opacity = (Math.random() * 0.5) + 0.3;
+    }
+
+
+    function init() {
+        for (var i = 0; i < flakeCount; i++) {
+            var x = Math.floor(Math.random() * canvas.width),
+                y = Math.floor(Math.random() * canvas.height),
+                size = (Math.random() * 3) + 2,
+                speed = (Math.random() * 1) + 8.0,
+                opacity = (Math.random() * 0.5) + 0.3;
+
+            flakes.push({
+                speed: speed,
+                velY: speed,
+                velX: 0,
+                x: x,
+                y: y,
+                size: size,
+                stepSize: (Math.random()) / 30,
+                step: 0,
+                opacity: opacity
+            });
+        }
+
+        snow();
+    };
+
+    canvas.addEventListener("mousemove", function(e) {
+        mX = e.clientX,
+        mY = e.clientY
+    });
+
+    window.addEventListener("resize",function(){
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    })
+
+    init();
+    
+ </script>
+
+<script>
+    var snowEffectInterval = jQuery.fn.snow({
+        // min size of element (default: 20)
+        minSize: 20,
+        
+        // max size of element (default: 50)
+        maxSize: 50,
+        
+        // flake fall time multiplier (default: 20)
+        fallTimeMultiplier: 20, 
+        
+        // flake fall time difference (default: 10000)
+        fallTimeDifference: 10000, 
+        
+        // interval (miliseconds) between new element spawns (default: 500)
+        spawnInterval: 500, 
+        
+        // jQuery element to apply snow effect on (should work on any block element) (default: body)
+        target: jQuery("body"),
+        
+        //elements to use in generating snow effect
+        elements	: [
+        // Element #1
+        { 
+            // html element to be spawned for this element
+            html: '<i class="fa fa-snowflake-o" aria-hidden="true"></i>',
+            // hex color for this element - works only for font based icons
+            color: '#ffffff'
+        },
+
+        // Element #1
+        { 
+            // html element to be spawned for this element
+            html: '<i class="fa fa-snowflake-o" aria-hidden="true"></i>',
+            // hex color for this element - works only for font based icons
+            color: '#ffffff'
+        },
+
+        // Element #1
+        { 
+            // html element to be spawned for this element
+            html: '<i class="fa fa-snowflake-o" aria-hidden="true"></i>',
+            // hex color for this element - works only for font based icons
+            color: '#ffffff'
+        },
+        
+        // Element #2
+        { 
+            // html element to be spawned for this element
+            html: '<i class="fa fa-bell-o" aria-hidden="true"></i>',
+            // hex color for this element - works only for font based icons
+            color: '#ed9b40'
+        },
+
+        // Element #2
+        { 
+            // html element to be spawned for this element
+            html: '<i class="fa fa-bell-o" aria-hidden="true"></i>',
+            // hex color for this element - works only for font based icons
+            color: '#ed9b40'
+        },
+
+        // Element #2
+        { 
+            // html element to be spawned for this element
+            html: '<i class="fa fa-bell-o" aria-hidden="true"></i>',
+            // hex color for this element - works only for font based icons
+            color: '#ed9b40'
+        },
+
+        // Element #3
+        { 
+            // html element to be spawned for this element
+            html: '<i>Merry Christmas</i>',
+            // hex color for this element - works only for font based icons
+            color: '#F83910'
+        },
+        
+        // Element #3
+        { 
+            // html element to be spawned for this element
+            html: '<i>Fröhliche Weihnachten</i>',
+            // hex color for this element - works only for font based icons
+            color: '#BAD402'
+        },
+
+        // Element #3
+        { 
+            // html element to be spawned for this element
+            html: '<i>聖誕快樂</i>',
+            // hex color for this element - works only for font based icons
+            color: '#10BCF8'
+        },
+
+        // Element #3
+        { 
+            // html element to be spawned for this element
+            html: '<i>Feliz Navidad</i>',
+            // hex color for this element - works only for font based icons
+            color: '#FF0000'
+        },
+        
+        // Element #4
+        {
+            // html element to be spawned for this element
+            html: '<i class="fa fa-music" aria-hidden="true"></i>',
+            // hex color for this element - works only for font based icons
+            color: '#cc2037'
+        },
+
+        {
+            // html element to be spawned for this element
+            html: '<i class="fa fa-music" aria-hidden="true"></i>',
+            // hex color for this element - works only for font based icons
+            color: '#cc2037'
+        },
+
+        
+        
+        ]
+    });
+</script>
+
+</html>
