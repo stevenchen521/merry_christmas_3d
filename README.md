@@ -1,5 +1,4 @@
 # Merry Christmas 3D Gallery
-Merry Christmas 3d Gallery
 
 This is a toy project of Merry Christmas 2019 for my company. Written with html + CSS + Javascript.
 
